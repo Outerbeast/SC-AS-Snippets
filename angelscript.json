@@ -1,67 +1,93 @@
 {
-	"Initialise MapInit": {
+	"Array": {
+		"prefix": "array",
+		"body" : [ "array<${1:type}>" ],
+		"description" : "Construct array of type"
+	},
+	"Typecast": {
+		"prefix": "cast",
+		"body" : [ "cast<${1:type}>( ${2:object} )" ],
+		"description" : "Cast to type"
+	},
+	"Enum": {
+		"prefix": "enum",
+		"body" : [ "enum ${1:typename}{};" ],
+		"description" : "Create an enumeration"
+	},
+	"Class": {
+		"prefix": "class",
+		"body" : [ "class ${1:typename}{};" ],
+		"description" : "Create a class"
+	},
+	"Final Class": {
+		"prefix": "final class",
+		"body" : [ "final class ${1:typename}{};" ],
+		"description" : "Create a non-inhertiable class"
+	},
+	// Functions
+	"void MapInit": {
 		"prefix": "void MapInit",
 		"body" : [ "void MapInit(){}" ],
 		"description" : "Initialisation before the map starts"
 	},
-	"Initialise MapActivate": {
+	"void MapActivate": {
 		"prefix": "void MapActivate",
 		"body" : [ "void MapActivate(){}" ],
 		"description" : "Initialisation while the map starts"
 	},
-	"Initialise MapStart": {
+	"void MapStart": {
 		"prefix": "void MapStart",
 		"body" : [ "void MapStart(){}" ],
 		"description" : "Initialisation when the map starts"
 	},
-	"Initialise PluginInit": {
+	"void PluginInit": {
 		"prefix": "void PluginInit",
 		"body" : [ "void PluginInit(){}" ],
 		"description" : "Initialisation when the plugin is re/loaded"
 	},
 	// Hooks
-	"MapChangeHook": {
+	"HookReturnCode MapChangeHook": {
 		"prefix": "HookReturnCode MapChange",
-		"body": "HookReturnCode MapChange(){}",
+		"body": "HookReturnCode MapChange(){ return HOOK_CONTINUE; }",
 		"description": "When the map changes, this hook is called. Note that this happens when the world is destroyed. There may still be entities that exist at this point. This is caused by engine limitations"
 	},
-	"EntityCreatedHook": {
+	"HookReturnCode EntityCreatedHook": {
 		"prefix": "HookReturnCode EntityCreated",
-		"body": "HookReturnCode EntityCreated(CBaseEntity@ pEntity){}",
+		"body": "HookReturnCode EntityCreated(CBaseEntity@ pEntity){ return HOOK_CONTINUE; }",
 		"description": "Called when a new entity is created. At this point the entity is not spawned yet and may not be fully initialized."
 	},
-	"PlayerSpawnHook": {
+	"HookReturnCode PlayerSpawnHook": {
 		"prefix": "HookReturnCode PlayerSpawn",
-		"body": "HookReturnCode PlayerSpawn(CBasePlayer@ pPlayer){}",
+		"body": "HookReturnCode PlayerSpawn(CBasePlayer@ pPlayer){ return HOOK_CONTINUE; }",
 		"description": "Called when a player (re)spawns."
 	},
-	"PlayerPostThinkHook": {
+	"HookReturnCode PlayerPostThinkHook": {
 		"prefix": "HookReturnCode PlayerPostThink",
-		"body": "HookReturnCode PlayerPostThink(CBasePlayer@ pPlayer){}",
+		"body": "HookReturnCode PlayerPostThink(CBasePlayer@ pPlayer){ return HOOK_CONTINUE; }",
 		"description": "Called when the player is processing post think events."
 	},
 	// CGame
-	"message AlertMessage": {
+	"void AlertMessage": {
 		"prefix": "g_Game.AlertMessage",
 		"body" : [ "g_Game.AlertMessage( ${1:ALERT_TYPE::enum}, ${2:string} )" ],
 		"description" : "Outputs a message to the console. Uses SC printf formatting style."
 	},
-	"precache PrecacheModel": {
+	"int PrecacheModel": {
 		"prefix": "g_Game.PrecacheModel",
 		"body" : [ "g_Game.PrecacheModel( ${1:string path} )" ],
 		"description" : "Precaches a model. Shuts down the game if not found. Can only be called from MapInit."
 	},
-	"precache PrecacheOther": {
+	"void PrecacheOther": {
 		"prefix": "g_Game.PrecacheOther",
 		"body" : [ "g_Game.PrecacheOther( ${1:string classname} )" ],
 		"description" : "Precaches an entity. This effectively instances an entity with the given class name, calls precache on it, and removes the entity."
 	},
-	"precache PrecacheMonster": {
+	"void PrecacheMonster": {
 		"prefix": "g_Game.PrecacheMonster",
 		"body" : [ "g_Game.PrecacheMonster( ${1:string classname}, ${2:bool fAlly} )" ],
 		"description" : "Precaches a monster entity. This effectively instances a monster entity with the given class name, calls precache on it, and removes the entity."
 	},
-	"precache PrecacheGeneric": {
+	"void PrecacheGeneric": {
 		"prefix": "g_Game.PrecacheGeneric",
 		"body" : [ "g_Game.PrecacheGeneric( ${1:string path} )" ],
 		"description" : "Precaches a file for download to clients."
@@ -87,12 +113,12 @@
 		"body" : [ "g_CustomEntityFuncs.IsCustomEntity( string classname )" ],
 		"description" : "Returns whether the given entity name is a registered custom entity"
 	},
-	"function RegisterCustomEntity": {
+	"void RegisterCustomEntity": {
 		"prefix": "g_CustomEntityFuncs.RegisterCustomEntity",
 		"body" : [ "g_CustomEntityFuncs.RegisterCustomEntity( string class, string classname )" ],
 		"description" : "Registers a class called class as a custom entity named classname. The class must inherit from a script entity base class."
 	},
-	"function UnRegisterCustomEntity": {
+	"void UnRegisterCustomEntity": {
 		"prefix": "g_CustomEntityFuncs.UnRegisterCustomEntity",
 		"body" : [ "g_CustomEntityFuncs.UnRegisterCustomEntity( ${1:string classname} )" ],
 		"description" : "Unregisters a custom entity by the given name"
@@ -131,17 +157,17 @@
 		"description" : "Gets the number of players that are currently connected to the server."
 	},
 	// CUtility methods
-	"function BloodStream": {
+	"void BloodStream": {
 		"prefix": "g_Utility.BloodStream",
 		"body" : [ "g_Utility.BloodStream( ${1:Vector origin}, ${2:Vector direction}, ${3:int BLOOD_COLOR::enum}, ${4:int renderamt} )" ],
 		"description" : "Creates a blood stream."
 	},
-	"function BloodDrips": {
+	"void BloodDrips": {
 		"prefix": "g_Utility.BloodDrips",
 		"body" : [ "g_Utility.BloodDrips( ${1:Vector origin}, ${2:Vector direction}, ${3:int BLOOD_COLOR::enum}, ${4:int renderamt} )" ],
 		"description" : "Creates blood drips."
 	},
-	"function RandomBloodVector": {
+	"void RandomBloodVector": {
 		"prefix": "g_Utility.RandomBloodVector",
 		"body" : [ "g_Utility.RandomBloodVector()" ],
 		"description" : "Returns a random blood direction vector"
@@ -151,47 +177,47 @@
 		"body" : [ "g_Utility.ShouldShowBlood( int BLOOD_COLOR::enum )" ],
 		"description" : "Returns whether blood of the given type should be shown."
 	},
-	"function BloodDecalTrace": {
+	"void BloodDecalTrace": {
 		"prefix": "g_Utility.BloodDecalTrace",
 		"body" : [ "g_Utility.BloodDecalTrace( ${1:TraceResult& in trace}, ${2:int BLOOD_COLOR::enum} )" ],
 		"description" : "Applies blood decal to the trace hit location"
 	},
-	"function DecalTrace": {
+	"void DecalTrace": {
 		"prefix": "g_Utility.DecalTrace",
 		"body" : [ "g_Utility.DecalTrace( ${1:TraceResult& in trace}, ${2:int iDecalNumber} )" ],
 		"description" : "Applies decal to the trace hit location"
 	},
-	"function PlayerDecalTrace": {
+	"void PlayerDecalTrace": {
 		"prefix": "g_Utility.PlayerDecalTrace",
 		"body" : [ "g_Utility.PlayerDecalTrace( ${1:TraceResult& in trace}, ${2:int iPlayerNum}, ${3:int iDecalNumber}, ${4:const bool bIsCustom} )" ],
 		"description" : "Applies player decal to the trace hit location"
 	},
-	"function GunshotDecalTrace": {
+	"void GunshotDecalTrace": {
 		"prefix": "g_Utility.GunshotDecalTrace",
 		"body" : [ "g_Utility.GunshotDecalTrace( ${1:TraceResult& in trace}, ${2:int iDecalNumber} )" ],
 		"description" : "Applies gunshot decal to the trace hit location"
 	},
-	"function Sparks": {
+	"void Sparks": {
 		"prefix": "g_Utility.Sparks",
 		"body" : [ "g_Utility.Sparks( ${1:const Vector& in vecPosition} )" ],
 		"description" : "Creates sparks at the given location"
 	},
-	"function Ricochet": {
+	"void Ricochet": {
 		"prefix": "g_Utility.Ricochet",
 		"body" : [ "g_Utility.Ricochet( ${1:const Vector& in vecPosition}, ${2:float flScale} )" ],
 		"description" : "Creates a ricochet at the given location"
 	},
-	"function WaterLevel": {
+	"void WaterLevel": {
 		"prefix": "g_Utility.WaterLevel",
 		"body" : [ "g_Utility.WaterLevel( ${1:const Vector& in vecPosition}, ${2:float minz}, ${3:float maxz} )" ],
 		"description" : "Determines the Z level at which a water surface level is, given a position to start searching from and a range to search."
 	},
-	"function Bubbles": {
+	"void Bubbles": {
 		"prefix": "g_Utility.Bubbles",
 		"body" : [ "g_Utility.Bubbles( ${1:const Vector& in vecMins}, ${2:const Vector& in vecMaxs}, ${3:int iCount} )" ],
 		"description" : "Creates a box filled with bubbles"
 	},
-	"function BubbleTrail": {
+	"void BubbleTrail": {
 		"prefix": "g_Utility.BubbleTrail",
 		"body" : [ "g_Utility.BubbleTrail( ${1:const Vector& in vecFrom}, ${2:const Vector& in vecTo}, ${3:int iCount)} " ],
 		"description" : "Creates a trail of bubbles"
@@ -221,42 +247,42 @@
 		"body" : [ "g_Utility.IsString3DVec( ${1:const string& in szString} )" ],
 		"description" : "Returns whether the given string is a 3D vector"
 	},
-	"function TraceLine": {
+	"void TraceLine": {
 		"prefix": "g_Utility.TraceLine",
 		"body" : [ "g_Utility.TraceLine( const Vector& in vecStart, const Vector& in vecEnd, IGNORE_MONSTERS igmon,edict_t@ pEntIgnore, TraceResult& out ptr )" ],
 		"description" : "Calculates a trace along the given line, storing the results in ptr."
 	},
-	"function TraceLine": {
+	"void TraceLine": {
 		"prefix": "g_Utility.TraceLine",
 		"body" : [ "g_Utility.TraceLine(const Vector& in vecStart, const Vector& in vecEnd, IGNORE_MONSTERS igmon,IGNORE_GLASS ignoreGlass, edict_t@ pEntIgnore, TraceResult& out ptr)" ],
 		"description" : "Calculates a trace along the given line, storing the results in ptr."
 	},
-	"function TraceHull": {
+	"void TraceHull": {
 		"prefix": "g_Utility.TraceHull",
 		"body" : [ "g_Utility.TraceHull(const Vector& in vecStart, const Vector& in vecEnd, IGNORE_MONSTERS igmon,HULL_NUMBER hullNumber, edict_t@ pEntIgnore, TraceResult& out ptr)" ],
 		"description" : "Calculates a trace along the given line, storing the results in ptr, using the specified hull type."
 	},
-	"function TraceToss": {
+	"void TraceToss": {
 		"prefix": "g_Utility.TraceToss",
 		"body" : [ "g_Utility.TraceToss(edict_t@ pEntity, edict_t@ pEntityToIgnore, TraceResult& out traceResult)" ],
 		"description" : "Trace toss"
 	},
-	"function TraceMonsterHull": {
+	"void TraceMonsterHull": {
 		"prefix": "g_Utility.TraceMonsterHull",
 		"body" : [ "g_Utility.TraceMonsterHull(edict_t@ pEntity, const Vector& in vecStart, const Vector& in vecEnd, IGNORE_MONSTERS igmon, edict_t@ pEntityToIgnore, TraceResult& out ptr)" ],
 		"description" : "Trace monster hull. Returns true if the trace was entirely in a solid object, or hit something."
 	},
-	"function TraceModel": {
+	"void TraceModel": {
 		"prefix": "g_Utility.TraceModel",
 		"body" : [ "g_Utility.TraceModel(const Vector& in vecStart, const Vector& in vecEnd, int iHullNumber, edict_t@ pEntityToIgnore, TraceResult& out ptr)" ],
 		"description" : "TraceModel"
 	},
-	"function TraceTexture": {
+	"void TraceTexture": {
 		"prefix": "g_Utility.TraceTexture",
 		"body" : [ "g_Utility.TraceTexture(edict_t@ pEntity, const Vector& in vecStart, const Vector& in vecEnd)" ],
 		"description" : "Trace texture"
 	},
-	"function FindEntityForward": {
+	"CBaseEntity@ FindEntityForward": {
 		"prefix": "g_Utility.FindEntityForward",
 		"body" : [ "g_Utility.FindEntityForward( CBaseEntity@ pLooker, float flMaxDistance )" ],
 		"description" : "Convience function that finds the entity that the given entity is currently looking at. Uses a maximum distance of 12048 units."
