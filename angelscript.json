@@ -1,0 +1,1088 @@
+{
+	"Initialise MapInit": {
+		"prefix": "void MapInit",
+		"body" : [ "void MapInit(){}" ],
+		"description" : "Initialisation before the map starts"
+	},
+	"Initialise MapActivate": {
+		"prefix": "void MapActivate",
+		"body" : [ "void MapActivate(){}" ],
+		"description" : "Initialisation while the map starts"
+	},
+	"Initialise MapStart": {
+		"prefix": "void MapStart",
+		"body" : [ "void MapStart(){}" ],
+		"description" : "Initialisation when the map starts"
+	},
+	"Initialise PluginInit": {
+		"prefix": "void PluginInit",
+		"body" : [ "void PluginInit(){}" ],
+		"description" : "Initialisation when the plugin is re/loaded"
+	},
+	// Hooks
+	"Hook MapChange": {
+		"prefix": "HookReturnCode MapChange",
+		"body": "HookReturnCode MapChange(){}",
+		"description": "When the map changes, this hook is called. Note that this happens when the world is destroyed. There may still be entities that exist at this point. This is caused by engine limitations"
+	},
+	"Hook EntityCreated": {
+		"prefix": "HookReturnCode EntityCreated",
+		"body": "HookReturnCode EntityCreated(CBaseEntity@ pEntity){}",
+		"description": "Called when a new entity is created. At this point the entity is not spawned yet and may not be fully initialized."
+	},
+	"Hook PlayerSpawn": {
+		"prefix": "HookReturnCode PlayerSpawn",
+		"body": "HookReturnCode PlayerSpawn(CBasePlayer@ pPlayer){}",
+		"description": "Called when a player (re)spawns."
+	},
+	"Hook PlayerPostThink": {
+		"prefix": "HookReturnCode PlayerPostThink",
+		"body": "HookReturnCode PlayerPostThink(CBasePlayer@ pPlayer){}",
+		"description": "Called when the player is processing post think events."
+	},
+	"message AlertMessage": {
+		"prefix": "g_Game.AlertMessage",
+		"body" : [ "g_Game.AlertMessage( ${1:ALERT_TYPE::enum}, ${2:string} )" ],
+		"description" : "Outputs a message to the console. Uses SC printf formatting style."
+	},
+	"precache PrecacheModel": {
+		"prefix": "g_Game.PrecacheModel",
+		"body" : [ "g_Game.PrecacheModel( ${1:string path} )" ],
+		"description" : "Precaches a model. Shuts down the game if not found. Can only be called from MapInit."
+	},
+	"precache PrecacheOther": {
+		"prefix": "g_Game.PrecacheOther",
+		"body" : [ "g_Game.PrecacheOther( ${1:string classname} )" ],
+		"description" : "Precaches an entity. This effectively instances an entity with the given class name, calls precache on it, and removes the entity."
+	},
+	"precache PrecacheMonster": {
+		"prefix": "g_Game.PrecacheMonster",
+		"body" : [ "g_Game.PrecacheMonster( ${1:string classname}, ${2:bool fAlly} )" ],
+		"description" : "Precaches a monster entity. This effectively instances a monster entity with the given class name, calls precache on it, and removes the entity."
+	},
+	"precache PrecacheGeneric": {
+		"prefix": "g_Game.PrecacheGeneric",
+		"body" : [ "g_Game.PrecacheGeneric( ${1:string path} )" ],
+		"description" : "Precaches a file for download to clients."
+	},
+	"string GetGameName": {
+		"prefix": "g_Game.GetGameName",
+		"body" : [ "g_Game.GetGameName()" ],
+		"description" : "Returns the game name as a string."
+	},
+	"string GetGameVersionString": {
+		"prefix": "g_Game.GetGameVersionString",
+		"body" : [ "g_Game.GetGameVersionString()" ],
+		"description" : "Returns the game version as a string, e.g. \"5.0\"."
+	},
+	"uint32 g_Game.GetGameVersion": {
+		"prefix": "g_Game.GetGameVersion",
+		"body" : [ "g_Game.GetGameVersion()" ],
+		"description" : "Returns the game version as a number, e.g. 500:. major version, minor version (3.0 becomes 300, 4.0b1 becomes 401, 4.06 becomes 406, 4.5 becomes 450, etc...)"
+	},
+	"bool IsCustomEntity": {
+		"prefix": "g_CustomEntityFuncs.IsCustomEntity",
+		"body" : [ "g_CustomEntityFuncs.IsCustomEntity( string classname )" ],
+		"description" : "Returns whether the given entity name is a registered custom entity"
+	},
+	"function RegisterCustomEntity": {
+		"prefix": "g_CustomEntityFuncs.RegisterCustomEntity",
+		"body" : [ "g_CustomEntityFuncs.RegisterCustomEntity( string class, string classname )" ],
+		"description" : "Registers a class called class as a custom entity named classname. The class must inherit from a script entity base class."
+	},
+	"function UnRegisterCustomEntity": {
+		"prefix": "g_CustomEntityFuncs.UnRegisterCustomEntity",
+		"body" : [ "g_CustomEntityFuncs.UnRegisterCustomEntity( ${1:string classname} )" ],
+		"description" : "Unregisters a custom entity by the given name"
+	},
+	// CHookManager
+	"function RegisterHook": {
+		"prefix": "g_Hooks.RegisterHook",
+		"body": [ "g_Hooks.RegisterHook( ${1:uint uiHookCode}, ${2:?& in pHookFunction} )" ],
+		"description": "Registers a hook. Pass in a hook function or delegate."
+	},
+	"function RemoveHook": {
+		"prefix": "g_Hooks.RemoveHook",
+		"body": [ "g_Hooks.RemoveHook( ${1:uint uiHookCode}, ${2:?& in pHookFunction} )" ],
+		"description": "Removes a hook. Pass in the hook function or delegate to remove"
+	},
+	// CPlayerFuncs methods
+	"function FindPlayerByIndex": {
+		"prefix": "g_PlayerFuncs.FindPlayerByIndex",
+		"body" : [ "g_PlayerFuncs.FindPlayerByIndex( ${1:int index} )" ],
+		"description" : "Finds a player by index"
+	},
+	"function FindPlayerByName": {
+		"prefix": "g_PlayerFuncs.FindPlayerByName",
+		"body" : [ "g_PlayerFuncs.FindPlayerByName( ${1:const string& in szName}, ${2:bool bCaseSensitive = true} )" ],
+		"description" : "Finds a player by name"
+	},
+	"function GetNumPlayers": {
+		"prefix": "g_PlayerFuncs.GetNumPlayers",
+		"body" : [ "g_PlayerFuncs.GetNumPlayers()" ],
+		"description" : "Gets the number of players that are currently connected to the server."
+	},
+	// CUtility methods
+	"function BloodStream": {
+		"prefix": "g_Utility.BloodStream",
+		"body" : [ "g_Utility.BloodStream( ${1:Vector origin}, ${2:Vector direction}, ${3:int BLOOD_COLOR::enum}, ${4:int renderamt} )" ],
+		"description" : "Creates a blood stream."
+	},
+	"function BloodDrips": {
+		"prefix": "g_Utility.BloodDrips",
+		"body" : [ "g_Utility.BloodDrips( ${1:Vector origin}, ${2:Vector direction}, ${3:int BLOOD_COLOR::enum}, ${4:int renderamt} )" ],
+		"description" : "Creates blood drips."
+	},
+	"function RandomBloodVector": {
+		"prefix": "g_Utility.RandomBloodVector",
+		"body" : [ "g_Utility.RandomBloodVector()" ],
+		"description" : "Returns a random blood direction vector"
+	},
+	"bool ShouldShowBlood": {
+		"prefix": "g_Utility.ShouldShowBlood",
+		"body" : [ "g_Utility.ShouldShowBlood( int BLOOD_COLOR::enum )" ],
+		"description" : "Returns whether blood of the given type should be shown."
+	},
+	"function BloodDecalTrace": {
+		"prefix": "g_Utility.BloodDecalTrace",
+		"body" : [ "g_Utility.BloodDecalTrace( ${1:TraceResult& in trace}, ${2:int BLOOD_COLOR::enum} )" ],
+		"description" : "Applies blood decal to the trace hit location"
+	},
+	"function DecalTrace": {
+		"prefix": "g_Utility.DecalTrace",
+		"body" : [ "g_Utility.DecalTrace( ${1:TraceResult& in trace}, ${2:int iDecalNumber} )" ],
+		"description" : "Applies decal to the trace hit location"
+	},
+	"function PlayerDecalTrace": {
+		"prefix": "g_Utility.PlayerDecalTrace",
+		"body" : [ "g_Utility.PlayerDecalTrace( ${1:TraceResult& in trace}, ${2:int iPlayerNum}, ${3:int iDecalNumber}, ${4:const bool bIsCustom} )" ],
+		"description" : "Applies player decal to the trace hit location"
+	},
+	"function GunshotDecalTrace": {
+		"prefix": "g_Utility.GunshotDecalTrace",
+		"body" : [ "g_Utility.GunshotDecalTrace( ${1:TraceResult& in trace}, ${2:int iDecalNumber} )" ],
+		"description" : "Applies gunshot decal to the trace hit location"
+	},
+	"function Sparks": {
+		"prefix": "g_Utility.Sparks",
+		"body" : [ "g_Utility.Sparks( ${1:const Vector& in vecPosition} )" ],
+		"description" : "Creates sparks at the given location"
+	},
+	"function Ricochet": {
+		"prefix": "g_Utility.Ricochet",
+		"body" : [ "g_Utility.Ricochet( ${1:const Vector& in vecPosition}, ${2:float flScale} )" ],
+		"description" : "Creates a ricochet at the given location"
+	},
+	"function WaterLevel": {
+		"prefix": "g_Utility.WaterLevel",
+		"body" : [ "g_Utility.WaterLevel( ${1:const Vector& in vecPosition}, ${2:float minz}, ${3:float maxz} )" ],
+		"description" : "Determines the Z level at which a water surface level is, given a position to start searching from and a range to search."
+	},
+	"function Bubbles": {
+		"prefix": "g_Utility.Bubbles",
+		"body" : [ "g_Utility.Bubbles( ${1:const Vector& in vecMins}, ${2:const Vector& in vecMaxs}, ${3:int iCount} )" ],
+		"description" : "Creates a box filled with bubbles"
+	},
+	"function BubbleTrail": {
+		"prefix": "g_Utility.BubbleTrail",
+		"body" : [ "g_Utility.BubbleTrail( ${1:const Vector& in vecFrom}, ${2:const Vector& in vecTo}, ${3:int iCount)} " ],
+		"description" : "Creates a trail of bubbles"
+	},
+	"Vector StringToVector": {
+		"prefix": "g_Utility.StringToVector",
+		"body" : [ "g_Utility.StringToVector( ${1:Vector& out vecVector}, ${2:const string& in szString}, ${3:const char delimiter = char(' ') } )" ],
+		"description" : "Converts the given string to a vector"
+	},
+	"bool IsStringInt": {
+		"prefix": "g_Utility.IsStringInt",
+		"body" : [ "g_Utility.IsStringInt( ${1:string} )" ],
+		"description" : "Returns whether the given string is an integer"
+	},
+	"bool IsStringFloat": {
+		"prefix": "g_Utility.IsStringFloat",
+		"body" : [ "g_Utility.IsStringFloat( ${1:string} )" ],
+		"description" : "Returns whether the given string is a float"
+	},
+	"float IsWholeNumber": {
+		"prefix": "g_Utility.IsWholeNumber",
+		"body" : [ "g_Utility.IsWholeNumber( ${1:const float flNum}, ${2:int& out iRounded} )" ],
+		"description" : "Returns whether the given float is a whole number, and returns the rounded number"
+	},
+	"bool IsString3DVec": {
+		"prefix": "g_Utility.IsString3DVec",
+		"body" : [ "g_Utility.IsString3DVec( ${1:const string& in szString} )" ],
+		"description" : "Returns whether the given string is a 3D vector"
+	},
+	"function TraceLine": {
+		"prefix": "g_Utility.TraceLine",
+		"body" : [ "g_Utility.TraceLine( const Vector& in vecStart, const Vector& in vecEnd, IGNORE_MONSTERS igmon,edict_t@ pEntIgnore, TraceResult& out ptr )" ],
+		"description" : "Calculates a trace along the given line, storing the results in ptr."
+	},
+	"function TraceLine": {
+		"prefix": "g_Utility.TraceLine",
+		"body" : [ "g_Utility.TraceLine(const Vector& in vecStart, const Vector& in vecEnd, IGNORE_MONSTERS igmon,IGNORE_GLASS ignoreGlass, edict_t@ pEntIgnore, TraceResult& out ptr)" ],
+		"description" : "Calculates a trace along the given line, storing the results in ptr."
+	},
+	"function TraceHull": {
+		"prefix": "g_Utility.TraceHull",
+		"body" : [ "g_Utility.TraceHull(const Vector& in vecStart, const Vector& in vecEnd, IGNORE_MONSTERS igmon,HULL_NUMBER hullNumber, edict_t@ pEntIgnore, TraceResult& out ptr)" ],
+		"description" : "Calculates a trace along the given line, storing the results in ptr, using the specified hull type."
+	},
+	"function TraceToss": {
+		"prefix": "g_Utility.TraceToss",
+		"body" : [ "g_Utility.TraceToss(edict_t@ pEntity, edict_t@ pEntityToIgnore, TraceResult& out traceResult)" ],
+		"description" : "Trace toss"
+	},
+	"function TraceMonsterHull": {
+		"prefix": "g_Utility.TraceMonsterHull",
+		"body" : [ "g_Utility.TraceMonsterHull(edict_t@ pEntity, const Vector& in vecStart, const Vector& in vecEnd, IGNORE_MONSTERS igmon, edict_t@ pEntityToIgnore, TraceResult& out ptr)" ],
+		"description" : "Trace monster hull. Returns true if the trace was entirely in a solid object, or hit something."
+	},
+	"function TraceModel": {
+		"prefix": "g_Utility.TraceModel",
+		"body" : [ "g_Utility.TraceModel(const Vector& in vecStart, const Vector& in vecEnd, int iHullNumber, edict_t@ pEntityToIgnore, TraceResult& out ptr)" ],
+		"description" : "TraceModel"
+	},
+	"function TraceTexture": {
+		"prefix": "g_Utility.TraceTexture",
+		"body" : [ "g_Utility.TraceTexture(edict_t@ pEntity, const Vector& in vecStart, const Vector& in vecEnd)" ],
+		"description" : "Trace texture"
+	},
+	"function FindEntityForward": {
+		"prefix": "g_Utility.FindEntityForward",
+		"body" : [ "g_Utility.FindEntityForward( CBaseEntity@ pLooker, float flMaxDistance )" ],
+		"description" : "Convience function that finds the entity that the given entity is currently looking at. Uses a maximum distance of 12048 units."
+	},
+	"g_Utility.GetGlobalTrace": {
+		"prefix": "g_Utility.GetGlobalTrace",
+		"body" : [ "g_Utility.GetGlobalTrace()" ],
+		"description" : "Gets the global trace data stored in g_Engine as a TraceResult object."
+	},
+	"g_Utility.IsPlayerInVolume": {
+		"prefix": "g_Utility.IsPlayerInVolume",
+		"body" : [ "g_Utility.IsPlayerInVolume(CBasePlayer@ pPlayer, CBaseEntity@ pEntityVolume)" ],
+		"description" : "Returns whether the given player is in the given volume."
+	},
+	"g_Utility.VoteActive": {
+		"prefix": "g_Utility.VoteActive",
+		"body" : [ "g_Utility.VoteActive()" ],
+		"description" : "Returns whether a vote is active. This only covers the votes started using the in-game vote menu, trigger_vote and the Vote class."
+	},
+	"g_Utility.GetCircularGaussianSpread": {
+		"prefix": "g_Utility.GetCircularGaussianSpread",
+		"body" : [ "g_Utility.GetCircularGaussianSpread(float& out x, float& out y)" ],
+		"description" : "Gets circular gaussian spread."
+	},
+	"g_Utility.CountPlayersInBrushVolume": {
+		"prefix": "g_Utility.CountPlayersInBrushVolume",
+		"body" : [ "g_Utility.CountPlayersInBrushVolume(const bool fIgnoreDeadPlayers, CBaseEntity@ pBrushVolume,int& out iOutPlayersInsideVolume, int& out iOutPlayersOutsideVolume, PlayerInVolumeListener@ pListener)" ],
+		"description" : "Counts the number of players inside and outside a brush volume."
+	},
+	"g_Utility.FindHullIntersection": {
+		"prefix": "g_Utility.FindHullIntersection",
+		"body" : [ "g_Utility.FindHullIntersection(const Vector& in vecSrc, TraceResult& in inTr, TraceResult& out outTr,const Vector& in vecMins, const Vector& in vecMaxs, edict_t@ pEntity, float flDistance = 1e6f)" ],
+		"description" : "Finds the hull intersection from a traceline in a given set of bounds. The bounds are relative to the input traceline's endpoint. The given entity is the entity performing the traceline."
+	},
+	"g_Utility.BuildEntityLogString": {
+		"prefix": "g_Utility.BuildEntityLogString",
+		"body" : [ "g_Utility.BuildEntityLogString(const string& in szName, const string& in szUserID = NULL, const string& in szAuthID = NULL, const string& in szTeam = NULL)" ],
+		"description" : "Builds a generic entity log string."
+	},
+	"g_Utility.BuildPlayerLogString": {
+		"prefix": "g_Utility.BuildPlayerLogString",
+		"body" : [ "g_Utility.BuildPlayerLogString(const string& in szName, const string& in szUserID = NULL, const string& in szAuthID = NULL)" ],
+		"description" : "Builds a generic player log string."
+	},
+	"g_Utility.GetPlayerLog": {
+		"prefix": "g_Utility.GetPlayerLog",
+		"body" : [ "g_Utility.GetPlayerLog(edict_t@ pPlayerEdict)" ],
+		"description" : "Get a player log string."
+	},
+	"g_EntityLoader.LoadFromFile": {
+		"prefix": "g_EntityLoader.LoadFromFile",
+		"body" : [ "g_EntityLoader.LoadFromFile( ${1:string filename}, ${2:const Vector& in vecOffset = g_vecZero} )" ],
+		"description" : "Loads entities from a file."
+	},
+	"bool entvars_t::ClassNameIs(const string& in szClassName)": {
+		"prefix": "pev.ClassNameIs",
+		"body" : [ "pev.ClassNameIs( ${1:const string& in szClassName} )" ],
+		"description" : "Returns whether the given class name is this entity's class name"
+	},
+	"int8 entvars_t::get_controller(uint)": {
+		"prefix": "pev.get_controller",
+		"body" : [ "pev.get_controller( ${1:uint} )" ],
+		"description" : "Get entity controller by index (0..3). Used by entities with studio models to get bone controller settings."
+	},
+	"void entvars_t::set_controller(uint, int8)": {
+		"prefix": "pev.set_controller",
+		"body" : [ "pev.set_controller( ${1:uint}, ${2:int8} )" ],
+		"description" : "Set entity controller by index (0..3, 0..255) Used by entities with studio models to set bone controller settings."
+	},
+	"int8 entvars_t::get_blending(uint)": {
+		"prefix": "pev.get_blending",
+		"body" : [ "pev.get_blending( ${1:uint} )" ],
+		"description" : "Get entity blending by index (0..1). Used by entities with models to get x or y axis blending."
+	},
+	"void entvars_t::set_blending(uint, int8)": {
+		"prefix": "pev.set_blending",
+		"body" : [ "pev.set_blending( ${1:uint}, ${2:int8} )" ],
+		"description" : "Set entity blending by index (0..1, 0..255). Used by entities with models to set x or y axis blending."
+	},
+	"bool entvars_t::SpawnFlagBitSet(int iFlags)": {
+		"prefix": "pev.SpawnFlagBitSet",
+		"body" : [ "pev.SpawnFlagBitSet( ${1:int iFlags} )" ],
+		"description" : "Returns whether the given flag(s) are set on the entvars spawnflags variable"
+	},
+	"bool entvars_t::FlagBitSet(int iFlags)": {
+		"prefix": "pev.FlagBitSet",
+		"body" : [ "pev.FlagBitSet( ${1:int iFlags} )" ],
+		"description" : "Returns whether the given flag(s) are set on the entvars flags variable"
+	},
+	"edict_t@ entvars_t::get_pContainingEntity() const": {
+		"prefix": "pev.get_pContainingEntity",
+		"body" : [ "pev.get_pContainingEntity()" ],
+		"description" : "Entity containing entity. pContainingEntity.vars equals this entvars instance."
+	},
+	"const string_t entvars_t::classname": {
+		"prefix": "pev.classname",
+		"body" : [ "pev.classname" ],
+		"description" : "The entity class name"
+	},
+	"string_t entvars_t::globalname": {
+		"prefix": "pev.globalname",
+		"body" : [ "pev.globalname" ],
+		"description" : "The entity global name"
+	},
+	"Vector entvars_t::origin": {
+		"prefix": "pev.origin",
+		"body" : [ "pev.origin" ],
+		"description" : "Entity origin. Must be set using g_EntityFuncs.SetOrigin."
+	},
+	"Vector entvars_t::oldorigin": {
+		"prefix": "pev.oldorigin",
+		"body" : [ "pev.oldorigin" ],
+		"description" : "Old entity origin. Used by some entities to store off their original origin before moving to a different location."
+	},
+	"Vector entvars_t::velocity": {
+		"prefix": "pev.velocity",
+		"body" : [ "pev.velocity" ],
+		"description" : "Entity velocity"
+	},
+	"Vector entvars_t::basevelocity": {
+		"prefix": "pev.basevelocity",
+		"body" : [ "pev.basevelocity" ],
+		"description" : "Entity base velocity. Used when standing on another entity that applies velocity to entities standing on it, for instance conveyors."
+	},
+	"Vector entvars_t::movedir": {
+		"prefix": "pev.movedir",
+		"body" : [ "pev.movedir" ],
+		"description" : "Entity move direction. Used by some entities for movement directions, but some entities use it for other purposes."
+	},
+	"Vector entvars_t::angles": {
+		"prefix": "pev.angles",
+		"body" : [ "pev.angles" ],
+		"description" : "Entity angles, in degrees."
+	},
+	"Vector entvars_t::avelocity": {
+		"prefix": "pev.avelocity",
+		"body" : [ "pev.avelocity" ],
+		"description" : "Entity angular velocity, in degrees/sec. Applied to the entity's angles."
+	},
+	"Vector entvars_t::punchangle": {
+		"prefix": "pev.punchangle",
+		"body" : [ "pev.punchangle" ],
+		"description" : "Player punch angle. These angles are applied to players when they are 'punched'.These angles are automatically interpolated back to the null vector over time."
+	},
+	"Vector entvars_t::v_angle": {
+		"prefix": "pev.v_angle",
+		"body" : [ "pev.v_angle" ],
+		"description" : "Player view angle. These are the angles used for the player's view, and differ from the regular angles variable."
+	},
+	"Vector entvars_t::endpos": {
+		"prefix": "pev.endpos",
+		"body" : [ "pev.endpos" ],
+		"description" : "Entity end position. Reserved for future use."
+	},
+	"Vector entvars_t::startpos": {
+		"prefix": "pev.startpos",
+		"body" : [ "pev.startpos" ],
+		"description" : "Entity start position. Reserved for future use."
+	},
+	"float entvars_t::impacttime": {
+		"prefix": "pev.impacttime",
+		"body" : [ "pev.impacttime" ],
+		"description" : "Entity impact time. Reserved for future use."
+	},
+	"float entvars_t::starttime": {
+		"prefix": "pev.starttime",
+		"body" : [ "pev.starttime" ],
+		"description" : "Entity start time. Reserved for future use."
+	},
+	"int entvars_t::fixangle": {
+		"prefix": "pev.fixangle",
+		"body" : [ "pev.fixangle" ],
+		"description" : "Entity fix angle. Engine uses this value to change player view angles, and then resets it to FAM_NOTHING. See FixAngleMode enum."
+	},
+	"float entvars_t::idealpitch": {
+		"prefix": "pev.idealpitch",
+		"body" : [ "pev.idealpitch" ],
+		"description" : "Entity ideal pitch. Used in conjunction with pitch_speed to interpolate the entity's current pitch angle to this value."
+	},
+	"float entvars_t::pitch_speed": {
+		"prefix": "pev.pitch_speed",
+		"body" : [ "pev.pitch_speed" ],
+		"description" : "Entity pitch speed. See idealpitch."
+	},
+	"float entvars_t::ideal_yaw": {
+		"prefix": "pev.ideal_yaw",
+		"body" : [ "pev.ideal_yaw" ],
+		"description" : "Entity ideal yaw. Used in conjunction with yaw_speed to interpolate the entity's current yaw angle to this value."
+	},
+	"float entvars_t::yaw_speed": {
+		"prefix": "pev.yaw_speed",
+		"body" : [ "pev.yaw_speed" ],
+		"description" : "Entity yaw speed. See ideal_yaw."
+	},
+	"const int entvars_t::modelindex": {
+		"prefix": "pev.modelindex",
+		"body" : [ "pev.modelindex" ],
+		"description" : "Entity model index. If this entity has a model, is the unique index of the model. Otherwise, is 0."
+	},
+	"string_t entvars_t::model": {
+		"prefix": "pev.model",
+		"body" : [ "pev.model" ],
+		"description" : "The entity model name. If this entity has a model, is the name of that model. Otherwise, is an empty string.Use g_EntityFuncs.SetModel to set this variable."
+	},
+	"string_t entvars_t::viewmodel": {
+		"prefix": "pev.viewmodel",
+		"body" : [ "pev.viewmodel" ],
+		"description" : "Player view model index. If this player has a visible weapon, is the name of that view (v_) model. Otherwise, is an empty string."
+	},
+	"string_t entvars_t::weaponmodel": {
+		"prefix": "pev.weaponmodel",
+		"body" : [ "pev.weaponmodel" ],
+		"description" : "Entity weapon model index. If this player has a visible weapon, is the name of that third person (p_) model. Otherwise, is an empty string."
+	},
+	"Vector entvars_t::absmin": {
+		"prefix": "pev.absmin",
+		"body" : [ "pev.absmin" ],
+		"description" : "Entity absolute minimum size. Is an absolute position in the world. Automatically updated by the engine."
+	},
+	"Vector entvars_t::absmax": {
+		"prefix": "pev.absmax",
+		"body" : [ "pev.absmax" ],
+		"description" : "Entity absolute maximum size. Is an absolute position in the world. Automatically updated by the engine."
+	},
+	"Vector entvars_t::mins": {
+		"prefix": "pev.mins",
+		"body" : [ "pev.mins" ],
+		"description" : "Entity minimum size. Relative to the player's origin."
+	},
+	"Vector entvars_t::maxs": {
+		"prefix": "pev.maxs",
+		"body" : [ "pev.maxs" ],
+		"description" : "Entity maximum size. Relative to the player's origin."
+	},
+	"Vector entvars_t::size": {
+		"prefix": "pev.size",
+		"body" : [ "pev.size" ],
+		"description" : "Entity size. Equivalent to maxs - mins"
+	},
+	"float entvars_t::ltime": {
+		"prefix": "pev.ltime",
+		"body" : [ "pev.ltime" ],
+		"description" : "Entity ltime. The last time this entity has executed its think function. Otherwise, is 0."
+	},
+	"float entvars_t::nextthink": {
+		"prefix": "pev.nextthink",
+		"body" : [ "pev.nextthink" ],
+		"description" : "Entity next think time. The next time this entity will execute its think function, as an absolute time value. Otherwise, is 0."
+	},
+	"int entvars_t::movetype": {
+		"prefix": "pev.movetype",
+		"body" : [ "pev.movetype" ],
+		"description" : "Entity movetype. See MOVETYPE::enum"
+	},
+	"int entvars_t::solid": {
+		"prefix": "pev.solid",
+		"body" : [ "pev.solid" ],
+		"description" : "Entity solid flag. See SOLID::enum."
+	},
+	"int entvars_t::skin": {
+		"prefix": "pev.skin",
+		"body" : [ "pev.skin" ],
+		"description" : "Entity skin index. Used by entities with studio models to set which skin to use."
+	},
+	"int entvars_t::body": {
+		"prefix": "pev.body",
+		"body" : [ "pev.body" ],
+		"description" : "Entity body index. Used by entities with studio models to set which body to use."
+	},
+	"int entvars_t::effects": {
+		"prefix": "pev.effects",
+		"body" : [ "pev.effects" ],
+		"description" : "Entity effects. See EFFECTS enum."
+	},
+	"float entvars_t::gravity": {
+		"prefix": "pev.gravity",
+		"body" : [ "pev.gravity" ],
+		"description" : "Entity gravity. Is a scalar between 0 and 1, inclusive."
+	},
+	"float entvars_t::friction": {
+		"prefix": "pev.friction",
+		"body" : [ "pev.friction" ],
+		"description" : "Entity friction. Is a scalar between 0 and 1, inclusive."
+	},
+	"int entvars_t::light_level": {
+		"prefix": "pev.light_level",
+		"body" : [ "pev.light_level" ],
+		"description" : "Player only light level. This is a single value between 0 and 255 inclusive. Use g_EngineFuncs.GetEntityIllum to retrieve this value."
+	},
+	"int entvars_t::sequence": {
+		"prefix": "pev.sequence",
+		"body" : [ "pev.sequence" ],
+		"description" : "Entity sequence. Used by entities with studio models to set which sequence to use."
+	},
+	"int entvars_t::gaitsequence": {
+		"prefix": "pev.gaitsequence",
+		"body" : [ "pev.gaitsequence" ],
+		"description" : "Entity gait sequence. Used by entities with studio models for walking sequences."
+	},
+	"float entvars_t::frame": {
+		"prefix": "pev.frame",
+		"body" : [ "pev.frame" ],
+		"description" : "Entity frame. Used by entities with studio models to set the current frame that a sequence is using. Automatically incremented.Used by brush models for animated textures: 1 for animated, 0 for off."
+	},
+	"float entvars_t::animtime": {
+		"prefix": "apev.nimtime",
+		"body" : [ "pev.animtime" ],
+		"description" : "Entity animation time. Used for internal operations."
+	},
+	"float entvars_t::framerate": {
+		"prefix": "pev.framerate",
+		"body" : [ "pev.framerate" ],
+		"description" : "Entity framerate. used by entities with studio models to control sequence frame rate."
+	},
+	"float entvars_t::scale": {
+		"prefix": "pev.scale",
+		"body" : [ "pev.scale" ],
+		"description" : "Entity rendering scale (0..255). Applies to studio and sprite models."
+	},
+	"int entvars_t::rendermode": {
+		"prefix": "pev.rendermode",
+		"body" : [ "pev.rendermode" ],
+		"description" : "Entity render mode. See RenderModes enum."
+	},
+	"float entvars_t::renderamt": {
+		"prefix": "pev.renderamt",
+		"body" : [ "pev.renderamt" ],
+		"description" : "Entity render amount (0..255)"
+	},
+	"Vector entvars_t::rendercolor": {
+		"prefix": "pev.rendercolor",
+		"body" : [ "pev.rendercolor" ],
+		"description" : "Entity render color (rgb)"
+	},
+	"int entvars_t::renderfx": {
+		"prefix": "pev.renderfx",
+		"body" : [ "pev.renderfx" ],
+		"description" : "Entity render fx"
+	},
+	"float entvars_t::health": {
+		"prefix": "pev.health",
+		"body" : [ "pev.health" ],
+		"description" : "Entity health. Do not set directly unless you are absolutely sure you know what you are doing."
+	},
+	"float entvars_t::frags": {
+		"prefix": "pev.frags",
+		"body" : [ "pev.frags" ],
+		"description" : "Entity frags. Usually used for the number of kills or score."
+	},
+	"int entvars_t::weapons": {
+		"prefix": "pev.weapons",
+		"body" : [ "pev.weapons" ],
+		"description" : "Entity weapons bit vector. Largely used by monsters to track which weapons they have, and by players for internal purposes."
+	},
+	"float entvars_t::takedamage": {
+		"prefix": "pev.takedamage",
+		"body" : [ "pev.takedamage" ],
+		"description" : "Entity take damage flag. See DAMAGE enum."
+	},
+	"int entvars_t::deadflag": {
+		"prefix": "pev.deadflag",
+		"body" : [ "pev.deadflag" ],
+		"description" : "Entity dead flag. See DEAD enum."
+	},
+	"Vector entvars_t::view_ofs": {
+		"prefix": "pev.view_ofs",
+		"body" : [ "pev.view_ofs" ],
+		"description" : "Entity view offset. Used to set an eye offset."
+	},
+	"int entvars_t::button": {
+		"prefix": "pev.button",
+		"body" : [ "pev.button" ],
+		"description" : "Entity button bit vector. Usually used to track which buttons the player is currently pressing."
+	},
+	"int entvars_t::impulse": {
+		"prefix": "pev.impulse",
+		"body" : [ "pev.impulse" ],
+		"description" : "Entity impulse bit vector. Used for various internal operations."
+	},
+	"edict_t@ entvars_t::chain": {
+		"prefix": "pev.chain",
+		"body" : [ "pev.chain" ],
+		"description" : "Entity pointer when linked into a linked list. Used for temporary lists."
+	},
+	"edict_t@ entvars_t::dmg_inflictor": {
+		"prefix": "pev.dmg_inflictor",
+		"body" : [ "pev.dmg_inflictor" ],
+		"description" : "Entity damage inflictor"
+	},
+	"edict_t@ entvars_t::enemy": {
+		"prefix": "pev.enemy",
+		"body" : [ "pev.enemy" ],
+		"description" : "Entity enemy"
+	},
+	"edict_t@ entvars_t::aiment": {
+		"prefix": "pev.aiment",
+		"body" : [ "pev.aiment" ],
+		"description" : "Entity pointer when MOVETYPE_FOLLOW"
+	},
+	"edict_t@ entvars_t::owner": {
+		"prefix": "pev.owner",
+		"body" : [ "pev.owner" ],
+		"description" : "Entity owner"
+	},
+	"edict_t@ entvars_t::groundentity": {
+		"prefix": "pev.groundentity",
+		"body" : [ "pev.groundentity" ],
+		"description" : "Entity ground entity"
+	},
+	"int entvars_t::spawnflags": {
+		"prefix": "pev.spawnflags",
+		"body" : [ "pev.spawnflags" ],
+		"description" : "Entity spawn flags"
+	},
+	"int entvars_t::flags": {
+		"prefix": "pev.flags",
+		"body" : [ "pev.flags" ],
+		"description" : "Entity flags. See EdictFlags enum."
+	},
+	"int entvars_t::colormap": {
+		"prefix": "pev.colormap",
+		"body" : [ "pev.colormap" ],
+		"description" : "Entity color map. Used for player model colors."
+	},
+	"int entvars_t::team": {
+		"prefix": "pev.team",
+		"body" : [ "pev.team" ],
+		"description" : "Entity team. Reserved for future use."
+	},
+	"float entvars_t::max_health": {
+		"prefix": "pev.max_health",
+		"body" : [ "pev.max_health" ],
+		"description" : "Entity maximum health"
+	},
+	"float entvars_t::teleport_time": {
+		"prefix": "pev.teleport_time",
+		"body" : [ "pev.teleport_time" ],
+		"description" : "Entity teleport time. Intended for internal operations."
+	},
+	"float entvars_t::armortype": {
+		"prefix": "pev.armortype",
+		"body" : [ "pev.armortype" ],
+		"description" : "Entity armor type. Represents maximum armor (similar to max_health)."
+	},
+	"float entvars_t::armorvalue": {
+		"prefix": "pev.armorvalue",
+		"body" : [ "pev.armorvalue" ],
+		"description" : "Entity armor value"
+	},
+	"int entvars_t::waterlevel": {
+		"prefix": "pev.waterlevel",
+		"body" : [ "pev.waterlevel" ],
+		"description" : "Entity water level. See WATERLEVEL enum."
+	},
+	"int entvars_t::watertype": {
+		"prefix": "pev.watertype",
+		"body" : [ "pev.watertype" ],
+		"description" : "Player only. Contains the type of water contents the player is currently in. See CONTENTS enum."
+	},
+	"string_t entvars_t::target": {
+		"prefix": "pev.target",
+		"body" : [ "pev.target" ],
+		"description" : "The entity target. If set, is the name of one or more targets to trigger. Otherwise, is empty."
+	},
+	"string_t entvars_t::targetname": {
+		"prefix": "pev.targetname",
+		"body" : [ "pev.targetname" ],
+		"description" : "The entity target name"
+	},
+	"string_t entvars_t::netname": {
+		"prefix": "pev.netname",
+		"body" : [ "pev.netname" ],
+		"description" : "The entity net name. Used for various things, such as the player's name."
+	},
+	"string_t entvars_t::message": {
+		"prefix": "pev.message",
+		"body" : [ "pev.message" ],
+		"description" : "The entity message. Used for various things."
+	},
+	"float entvars_t::dmg_take": {
+		"prefix": "pev.dmg_take",
+		"body" : [ "pev.dmg_take" ],
+		"description" : "Entity damage take. Used for internal operations."
+	},
+	"float entvars_t::dmg_save": {
+		"prefix": "pev.dmg_save",
+		"body" : [ "pev.dmg_save" ],
+		"description" : "Entity damage save. Used for internal operations."
+	},
+	"float entvars_t::dmg": {
+		"prefix": "pev.dmg",
+		"body" : [ "pev.dmg" ],
+		"description" : "Entity damage. Usually stores how much damage this entity can do to other entities."
+	},
+	"float entvars_t::dmgtime": {
+		"prefix": "pev.dmgtime",
+		"body" : [ "pev.dmgtime" ],
+		"description" : "Entity damage time. Time at which this entity last took damage. Usually used to limit damage effects from being shown too often."
+	},
+	"string_t entvars_t::noise": {
+		"prefix": "pev.noise",
+		"body" : [ "pev.noise" ],
+		"description" : "Entity noise. Usually used to store a sound name."
+	},
+	"string_t entvars_t::noise1": {
+		"prefix": "pev.noise1",
+		"body" : [ "pev.noise1" ],
+		"description" : "Entity noise 1. Usually used to store a sound name."
+	},
+	"string_t entvars_t::noise2": {
+		"prefix": "pev.noise2",
+		"body" : [ "pev.noise2" ],
+		"description" : "Entity noise 2. Usually used to store a sound name."
+	},
+	"string_t entvars_t::noise3": {
+		"prefix": "pev.noise3",
+		"body" : [ "pev.noise3" ],
+		"description" : "Entity noise 3. Usually used to store a sound name."
+	},
+	"float entvars_t::speed": {
+		"prefix": "pev.speed",
+		"body" : [ "pev.speed" ],
+		"description" : "Entity speed"
+	},
+	"float entvars_t::air_finished": {
+		"prefix": "pev.air_finished",
+		"body" : [ "pev.air_finished" ],
+		"description" : "Player air finished. Time at which the player runs out of air when underwater."
+	},
+	"float entvars_t::pain_finished": {
+		"prefix": "pev.pain_finished",
+		"body" : [ "pev.pain_finished" ],
+		"description" : "Player pain finished. Time at which the player can take damage again while drowning."
+	},
+	"float entvars_t::radsuit_finished": {
+		"prefix": "pev.radsuit_finished",
+		"body" : [ "pev.radsuit_finished" ],
+		"description" : "Entity radiation suit finished. Reserved for future use."
+	},
+	"int entvars_t::playerclass": {
+		"prefix": "pev.playerclass",
+		"body" : [ "pev.playerclass" ],
+		"description" : "Entity player class. Reserved for future use."
+	},
+	"float entvars_t::maxspeed": {
+		"prefix": "pev.maxspeed",
+		"body" : [ "pev.maxspeed" ],
+		"description" : "Entity maximum speed"
+	},
+	"float entvars_t::fov": {
+		"prefix": "pev.fov",
+		"body" : [ "pev.fov" ],
+		"description" : "Player field of view"
+	},
+	"int entvars_t::weaponanim": {
+		"prefix": "pev.weaponanim",
+		"body" : [ "pev.weaponanim" ],
+		"description" : "Player weapon animation"
+	},
+	"int entvars_t::pushmsec": {
+		"prefix": "pev.pushmsec",
+		"body" : [ "pev.pushmsec" ],
+		"description" : "Entity push milliseconds. Used for internal operations."
+	},
+	"int entvars_t::bInDuck": {
+		"prefix": "pev.bInDuck",
+		"body" : [ "pev.bInDuck" ],
+		"description" : "Entity ducking flag. Used for internal operations."
+	},
+	"int entvars_t::flTimeStepSound": {
+		"prefix": "pev.flTimeStepSound",
+		"body" : [ "pev.flTimeStepSound" ],
+		"description" : "Entity time of step sound. Used for internal operations."
+	},
+	"int entvars_t::flSwimTime": {
+		"prefix": "pev.flSwimTime",
+		"body" : [ "pev.flSwimTime" ],
+		"description" : "Entity swim time. Used for internal operations."
+	},
+	"int entvars_t::flDuckTime": {
+		"prefix": "pev.flDuckTime",
+		"body" : [ "pev.flDuckTime" ],
+		"description" : "Entity duck time. Used for internal operations."
+	},
+	"int entvars_t::iStepLeft": {
+		"prefix": "pev.iStepLeft",
+		"body" : [ "pev.iStepLeft" ],
+		"description" : "Entity step left flag. Used for internal operations."
+	},
+	"float entvars_t::flFallVelocity": {
+		"prefix": "pev.flFallVelocity",
+		"body" : [ "pev.flFallVelocity" ],
+		"description" : "Player fall velocity."
+	},
+	"int entvars_t::gamestate": {
+		"prefix": "pev.gamestate",
+		"body" : [ "pev.gamestate" ],
+		"description" : "Entity gamestate. Reserved for future use."
+	},
+	"int entvars_t::oldbuttons": {
+		"prefix": "pev.oldbuttons",
+		"body" : [ "pev.oldbuttons" ],
+		"description" : "Player old buttons. Previous frame's contents of buttons."
+	},
+	"int entvars_t::groupinfo": {
+		"prefix": "pev.groupinfo",
+		"body" : [ "pev.groupinfo" ],
+		"description" : "Entity group info. Used for internal operations."
+	},
+	"int entvars_t::iuser1": {
+		"prefix": "pev.iuser1",
+		"body" : [ "pev.iuser1" ],
+		"description" : "User variable 1 (integer)"
+	},
+	"pev.iuser2": {
+		"prefix": "pev.iuser2",
+		"body" : [ "pev.iuser2" ],
+		"description" : "User variable 2 (integer)"
+	},
+	"pev.iuser3": {
+		"prefix": "pev.iuser3",
+		"body" : [ "pev.iuser3" ],
+		"description" : "User variable 3 (integer)"
+	},
+	"pev.iuser4": {
+		"prefix": "pev.iuser4",
+		"body" : [ "pev.iuser4" ],
+		"description" : "User variable 4 (integer)"
+	},
+	"pev.fuser1": {
+		"prefix": "pev.fuser1",
+		"body" : [ "pev.fuser1" ],
+		"description" : "User variable 1 (float)"
+	},
+	"pev.fuser2": {
+		"prefix": "pev.fuser2",
+		"body" : [ "pev.fuser2" ],
+		"description" : "User variable 2 (float)"
+	},
+	"pev.fuser3": {
+		"prefix": "fuser3",
+		"body" : [ "fuser3" ],
+		"description" : "User variable 3 (float)"
+	},
+	"pev.fuser4": {
+		"prefix": "pev.fuser4",
+		"body" : [ "pev.fuser4" ],
+		"description" : "User variable 4 (float)"
+	},
+	"pev.vuser1": {
+		"prefix": "vpev.user1",
+		"body" : [ "pev.vuser1" ],
+		"description" : "User variable 1 (Vector)"
+	},
+	"pev.vuser2": {
+		"prefix": "pev.vuser2",
+		"body" : [ "pev.vuser2" ],
+		"description" : "User variable 2 (Vector)"
+	},
+	"pev.vuser3": {
+		"prefix": "pev.vuser3",
+		"body" : [ "pev.vuser3" ],
+		"description" : "User variable 3 (Vector)"
+	},
+	"pev.vuser4": {
+		"prefix": "pev.vuser4",
+		"body" : [ "pev.vuser4" ],
+		"description" : "User variable 4 (Vector)"
+	},
+	"pev.euser1": {
+		"prefix": "pev.euser1",
+		"body" : [ "pev.euser1" ],
+		"description" : "User variable 1 (Edict)"
+	},
+	"pev.euser2": {
+		"prefix": "pev.euser2",
+		"body" : [ "pev.euser2" ],
+		"description" : "User variable 2 (Edict)"
+	},
+	"pev.euser3": {
+		"prefix": "pev.euser3",
+		"body" : [ "pev.euser3" ],
+		"description" : "User variable 3 (Edict)"
+	},
+	"pev.euser4": {
+		"prefix": "pev.euser4",
+		"body" : [ "pev.euser4" ],
+		"description" : "User variable 4 (Edict)"
+	},
+	
+	// Enumerations
+	"ALERT_TYPE::at_notice": {
+		"prefix": "ALERT_TYPE::at_notice",
+		"body" : [ "at_notice" ],
+		"description" : "(0) Prints 'NOTICE: <message>'"
+	},
+	"ALERT_TYPE::at_console": {
+		"prefix": "ALERT_TYPE::at_console",
+		"body" : [ "at_console" ],
+		"description" : "(1) Only shown if developer is 1 or larger"
+	},
+	"ALERT_TYPE::at_aiconsole": {
+		"prefix": "ALERT_TYPE::at_aiconsole",
+		"body" : [ "at_aiconsole" ],
+		"description" : "(2) Only shown if developer is 2 or larger"
+	},
+	"ALERT_TYPE::at_warning": {
+		"prefix": "ALERT_TYPE::at_warning",
+		"body" : [ "at_warning" ],
+		"description" : "(3) Prints 'Warning: <message>'"
+	},
+	"ALERT_TYPE::at_error": {
+		"prefix": "ALERT_TYPE::at_error",
+		"body" : [ "at_error" ],
+		"description" : "(4) Prints 'Error: <message>'"
+	},
+	"ALERT_TYPE::at_logged": {
+		"prefix": "ALERT_TYPE::at_logged",
+		"body" : [ "at_logged" ],
+		"description" : "(5) Server print to console"
+	},
+	"BLOOD_COLOR::DONT_BLEED": {
+		"prefix": "BLOOD_COLOR::DONT_BLEED",
+		"body" : [ "DONT_BLEED" ],
+		"description" : "(-1) Don't bleed"
+	},
+	"BLOOD_COLOR::BLOOD_COLOR_RED": {
+		"prefix": "BLOOD_COLOR::BLOOD_COLOR_RED",
+		"body" : [ "BLOOD_COLOR_RED" ],
+		"description" : "(247) Red blood"
+	},
+	"BLOOD_COLOR::BLOOD_COLOR_YELLOW": {
+		"prefix": "BBLOOD_COLOR::LOOD_COLOR_YELLOW",
+		"body" : [ "BLOOD_COLOR_YELLOW" ],
+		"description" : "(195) Yellow blood"
+	},
+	"BLOOD_COLOR::BLOOD_COLOR_GREEN": {
+		"prefix": "BLOOD_COLOR::BLOOD_COLOR_GREEN",
+		"body" : [ "BLOOD_COLOR_GREEN" ],
+		"description" : "(195) Green blood"
+	},
+	"MOVETYPE::MOVETYPE_NONE_EXPLICIT": {
+		"prefix": "MOVETYPE::MOVETYPE_NONE_EXPLICIT",
+		"body" : [ "MOVETYPE_NONE_EXPLICIT" ],
+		"description" : "(-1) never moves (forced by map)"
+	},
+	"MOVETYPE::MOVETYPE_NONE": {
+		"prefix": "MOVETYPE::MOVETYPE_NONE",
+		"body" : [ "MOVETYPE_NONE" ],
+		"description" : "(0) never moves"
+	},
+	"MOVETYPE::MOVETYPE_WALK": {
+		"prefix": "MOVETYPE::MOVETYPE_WALK",
+		"body" : [ "MOVETYPE_WALK" ],
+		"description" : "(3) Player only - moving on the ground"
+	},
+	"MOVETYPE::MOVETYPE_STEP": {
+		"prefix": "MOVETYPE::MOVETYPE_STEP",
+		"body" : [ "MOVETYPE_STEP" ],
+		"description" : "(4) gravity, special edge handling -- monsters use this"
+	},
+	"MOVETYPE::MOVETYPE_FLY": {
+		"prefix": "MOVETYPE::MOVETYPE_FLY",
+		"body" : [ "MOVETYPE_FLY" ],
+		"description" : "(5) No gravity, but still collides with stuff"
+	},
+	"MOVETYPE::MOVETYPE_TOSS": {
+		"prefix": "MOVETYPE::MOVETYPE_TOSS",
+		"body" : [ "MOVETYPE_TOSS" ],
+		"description" : "(6) gravity/collisions"
+	},
+	"MOVETYPE::MOVETYPE_PUSH": {
+		"prefix": "MOVETYPE::MOVETYPE_PUSH",
+		"body" : [ "MOVETYPE_PUSH" ],
+		"description" : "(7) no clip to world, push and crush"
+	},
+	"MOVETYPE::MOVETYPE_NOCLIP": {
+		"prefix": "MOVETYPE::MOVETYPE_NOCLIP",
+		"body" : [ "MOVETYPE_NOCLIP" ],
+		"description" : "(8) No gravity, no collisions, still do velocity/avelocity"
+	},
+	"MOVETYPE::MOVETYPE_FLYMISSILE": {
+		"prefix": "MOVETYPE::MOVETYPE_FLYMISSILE",
+		"body" : [ "MOVETYPE_FLYMISSILE" ],
+		"description" : "(9) extra size to monsters"
+	},
+	"MOVETYPE::MOVETYPE_BOUNCE": {
+		"prefix": "MOVETYPE::MOVETYPE_BOUNCE",
+		"body" : [ "MOVETYPE_BOUNCE" ],
+		"description" : "(10) Just like Toss, but reflect velocity when contacting surfaces"
+	},
+	"MOVETYPE::MOVETYPE_BOUNCEMISSILE": {
+		"prefix": "MOVETYPE::MOVETYPE_BOUNCEMISSILE",
+		"body" : [ "MOVETYPE_BOUNCEMISSILE" ],
+		"description" : "(11) bounce w/o gravity"
+	},
+	"MOVETYPE::MOVETYPE_FOLLOW": {
+		"prefix": "MOVETYPE::MOVETYPE_FOLLOW",
+		"body" : [ "MOVETYPE_FOLLOW" ],
+		"description" : "(12) track movement of aiment"
+	},
+	"MOVETYPE::MOVETYPE_PUSHSTEP": {
+		"prefix": "MOVETYPE::MOVETYPE_PUSHSTEP",
+		"body" : [ "MOVETYPE_PUSHSTEP" ],
+		"description" : "(13) BSP model that needs physics/world collisions (uses nearest hull for world collision)"
+	},
+	"SOLID::SOLID_NOT_EXPLICIT": {
+		"prefix": "SOLID::SOLID_NOT_EXPLICIT",
+		"body" : [ "SOLID_NOT_EXPLICIT" ],
+		"description" : "(-1) no interaction with other objects (forced by map)"
+	},
+	"SOLID::SOLID_NOT": {
+		"prefix": "SOLID::SOLID_NOT",
+		"body" : [ "SOLID_NOT" ],
+		"description" : "(0) no interaction with other objects"
+	},
+	"SOLID::SOLID_TRIGGER": {
+		"prefix": "SOLID::SOLID_TRIGGER",
+		"body" : [ "SOLID_TRIGGER" ],
+		"description" : "(1) touch on edge, but not blocking"
+	},
+	"SOLID::SOLID_BBOX": {
+		"prefix": "SOLID::SOLID_BBOX",
+		"body" : [ "SOLID_BBOX" ],
+		"description" : "(2) touch on edge, block"
+	},
+	"SOLID::SOLID_SLIDEBOX": {
+		"prefix": "SOLID::SOLID_SLIDEBOX",
+		"body" : [ "SOLID_SLIDEBOX" ],
+		"description" : "(3) touch on edge, but not an onground"
+	},
+	"SOLID::SOLID_BSP": {
+		"prefix": "SOLID::SOLID_BSP",
+		"body" : [ "SOLID_BSP" ],
+		"description" : "(4) bsp clip, touch on edge, block"
+	},
+}
