@@ -20,26 +20,27 @@
 		"description" : "Initialisation when the plugin is re/loaded"
 	},
 	// Hooks
-	"Hook MapChange": {
+	"MapChangeHook": {
 		"prefix": "HookReturnCode MapChange",
 		"body": "HookReturnCode MapChange(){}",
 		"description": "When the map changes, this hook is called. Note that this happens when the world is destroyed. There may still be entities that exist at this point. This is caused by engine limitations"
 	},
-	"Hook EntityCreated": {
+	"EntityCreatedHook": {
 		"prefix": "HookReturnCode EntityCreated",
 		"body": "HookReturnCode EntityCreated(CBaseEntity@ pEntity){}",
 		"description": "Called when a new entity is created. At this point the entity is not spawned yet and may not be fully initialized."
 	},
-	"Hook PlayerSpawn": {
+	"PlayerSpawnHook": {
 		"prefix": "HookReturnCode PlayerSpawn",
 		"body": "HookReturnCode PlayerSpawn(CBasePlayer@ pPlayer){}",
 		"description": "Called when a player (re)spawns."
 	},
-	"Hook PlayerPostThink": {
+	"PlayerPostThinkHook": {
 		"prefix": "HookReturnCode PlayerPostThink",
 		"body": "HookReturnCode PlayerPostThink(CBasePlayer@ pPlayer){}",
 		"description": "Called when the player is processing post think events."
 	},
+	// CGame
 	"message AlertMessage": {
 		"prefix": "g_Game.AlertMessage",
 		"body" : [ "g_Game.AlertMessage( ${1:ALERT_TYPE::enum}, ${2:string} )" ],
@@ -80,6 +81,7 @@
 		"body" : [ "g_Game.GetGameVersion()" ],
 		"description" : "Returns the game version as a number, e.g. 500:. major version, minor version (3.0 becomes 300, 4.0b1 becomes 401, 4.06 becomes 406, 4.5 becomes 450, etc...)"
 	},
+	// CCustomEntityFuncs
 	"bool IsCustomEntity": {
 		"prefix": "g_CustomEntityFuncs.IsCustomEntity",
 		"body" : [ "g_CustomEntityFuncs.IsCustomEntity( string classname )" ],
@@ -95,29 +97,35 @@
 		"body" : [ "g_CustomEntityFuncs.UnRegisterCustomEntity( ${1:string classname} )" ],
 		"description" : "Unregisters a custom entity by the given name"
 	},
+	// CEntityFuncs
+	"CBaseEntity@ CreateEntity": {
+		"prefix": "g_EntityFuncs.CreateEntity",
+		"body" : [ "g_EntityFuncs.CreateEntity( ${1:const string& in classname} )" ],
+		"description" : "Create an entity by class name. Pass keyvalues in using the dictionary, if any. Keyvalues must be strings. The class name can be either one of the entities included with the game or a custom entity."
+	},
 	// CHookManager
-	"function RegisterHook": {
+	"bool RegisterHook": {
 		"prefix": "g_Hooks.RegisterHook",
 		"body": [ "g_Hooks.RegisterHook( ${1:uint uiHookCode}, ${2:?& in pHookFunction} )" ],
 		"description": "Registers a hook. Pass in a hook function or delegate."
 	},
-	"function RemoveHook": {
+	"void RemoveHook": {
 		"prefix": "g_Hooks.RemoveHook",
 		"body": [ "g_Hooks.RemoveHook( ${1:uint uiHookCode}, ${2:?& in pHookFunction} )" ],
 		"description": "Removes a hook. Pass in the hook function or delegate to remove"
 	},
 	// CPlayerFuncs methods
-	"function FindPlayerByIndex": {
+	"CBasePlayer@ FindPlayerByIndex": {
 		"prefix": "g_PlayerFuncs.FindPlayerByIndex",
 		"body" : [ "g_PlayerFuncs.FindPlayerByIndex( ${1:int index} )" ],
 		"description" : "Finds a player by index"
 	},
-	"function FindPlayerByName": {
+	"CBasePlayer@ FindPlayerByName": {
 		"prefix": "g_PlayerFuncs.FindPlayerByName",
 		"body" : [ "g_PlayerFuncs.FindPlayerByName( ${1:const string& in szName}, ${2:bool bCaseSensitive = true} )" ],
 		"description" : "Finds a player by name"
 	},
-	"function GetNumPlayers": {
+	"int GetNumPlayers": {
 		"prefix": "g_PlayerFuncs.GetNumPlayers",
 		"body" : [ "g_PlayerFuncs.GetNumPlayers()" ],
 		"description" : "Gets the number of players that are currently connected to the server."
@@ -298,11 +306,13 @@
 		"body" : [ "g_Utility.GetPlayerLog(edict_t@ pPlayerEdict)" ],
 		"description" : "Get a player log string."
 	},
+	// CEntityLoader
 	"g_EntityLoader.LoadFromFile": {
 		"prefix": "g_EntityLoader.LoadFromFile",
 		"body" : [ "g_EntityLoader.LoadFromFile( ${1:string filename}, ${2:const Vector& in vecOffset = g_vecZero} )" ],
 		"description" : "Loads entities from a file."
 	},
+	// entvars_t
 	"bool entvars_t::ClassNameIs(const string& in szClassName)": {
 		"prefix": "pev.ClassNameIs",
 		"body" : [ "pev.ClassNameIs( ${1:const string& in szClassName} )" ],
@@ -918,22 +928,22 @@
 		"body" : [ "pev.vuser4" ],
 		"description" : "User variable 4 (Vector)"
 	},
-	"pev.euser1": {
+	"edict_t@ entvars_t::pev.euser1": {
 		"prefix": "pev.euser1",
 		"body" : [ "pev.euser1" ],
 		"description" : "User variable 1 (Edict)"
 	},
-	"pev.euser2": {
+	"edict_t@ entvars_t::pev.euser2": {
 		"prefix": "pev.euser2",
 		"body" : [ "pev.euser2" ],
 		"description" : "User variable 2 (Edict)"
 	},
-	"pev.euser3": {
+	"edict_t@ entvars_t::pev.euser3": {
 		"prefix": "pev.euser3",
 		"body" : [ "pev.euser3" ],
 		"description" : "User variable 3 (Edict)"
 	},
-	"pev.euser4": {
+	"edict_t@ entvars_t::pev.euser4": {
 		"prefix": "pev.euser4",
 		"body" : [ "pev.euser4" ],
 		"description" : "User variable 4 (Edict)"
@@ -1084,5 +1094,11 @@
 		"prefix": "SOLID::SOLID_BSP",
 		"body" : [ "SOLID_BSP" ],
 		"description" : "(4) bsp clip, touch on edge, block"
+	},
+	// Loops
+	"Player loop": {
+		"prefix": "for",
+		"body" : [ "for( int iPlayer = 1; iPlayer <= g_Engine.maxClients; iPlayer++ ){ CBasePlayer@ pPlayer = g_PlayerFuncs.FindPlayerByIndex( iPlayer ); }" ],
+		"description" : "Iterate across all players"
 	},
 }
